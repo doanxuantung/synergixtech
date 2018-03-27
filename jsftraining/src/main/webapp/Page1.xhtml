@@ -29,10 +29,19 @@
 		<h:selectBooleanCheckbox value="Remember Me" id="chkRememberMe"
 			onchange="showCheckedValue()" /> Nhớ mật khẩu
 		
-		<h:selectManyCheckbox value="#{userData.data}">
-			<f:selectItem itemValue="1" itemLabel="Item 1" />
-			<f:selectItem itemValue="2" itemLabel="Item 2" />
-		</h:selectManyCheckbox>
+		<h:selectManyCheckbox>
+            <f:selectItem itemValue = "1" itemLabel = "Item 1" />
+            <f:selectItem itemValue = "2" itemLabel = "Item 2" />
+            <f:selectItem itemValue = "3" itemLabel = "Item 3" />
+            <f:selectItem itemValue = "4" itemLabel = "Item 4" />
+            <f:selectItem itemValue = "5" itemLabel = "Item 5" />
+         </h:selectManyCheckbox>
+         <h:commandButton value = "Submit" action = "result" />
+         <h:outputFormat value = "parameter 1 : {0}, parameter 2 : {1}" >
+            <f:param value = "Item 1" />
+            <f:param value = "Item 2" />
+         </h:outputFormat>	
+         <h:outputLink value = "Page1.xhtml" >Page 1 demo outputlink</h:outputLink> 
 	</h:form>
 
 	<script type="text/javascript">

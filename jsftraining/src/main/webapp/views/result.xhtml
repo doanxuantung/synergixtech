@@ -1,0 +1,25 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+	<h2>Result Information User</h2>
+	<hr />
+	<h:outputFormat
+		value="Username: {0}, Password: {1}, Sex: {2}, Address: {3}">
+		<f:param value="#{user.username}" />
+		<f:param value="#{user.password}" />
+		<f:param value="#{user.sex}" />
+		<f:param value="#{user.address}" />
+	</h:outputFormat>
+	<h:outputText value=", Hobby: "/>
+	<ui:repeat value="#{user.hobby}" var="s">
+		<h:outputText value="#{s}," />
+	</ui:repeat>
+</h:body>
+</html>

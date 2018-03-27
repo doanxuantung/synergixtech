@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns = "http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<title>JSF Sign Up</title>
+	<h:outputStylesheet library = "css" name = "style.css"  /> 
+</h:head>
+<h:body>
+	<h:form>
+		<h:panelGrid id="panel" columns="2" border="1" cellpadding="10"
+			cellspacing="1">
+
+			<f:facet name="header">
+				<h:graphicImage value="/images/icon_synergixtech.jpg" width="200px" />
+				<h3>Sign Up</h3>
+			</f:facet>
+
+			<h:outputLabel value="Username" />
+			<h:inputText id="username" a:placeholder="Username" style="width:100%" value = "#{user.username}" required="true">
+				<f:validateLength minimum = "5" /> 
+			</h:inputText>
+			<h:outputLabel value="Password" ></h:outputLabel>
+			<h:inputSecret a:placeholder="Password" style="width:100%" value = "#{user.password}" />
+			<h:outputLabel value="Sex?"/>
+			<h:selectOneRadio value = "#{user.sex}">
+				<f:selectItem itemValue="Male" itemLabel="Male" />
+				<f:selectItem itemValue="Female" itemLabel="Female" />
+			</h:selectOneRadio>
+			<h:outputLabel value="Address?" />
+			<h:selectOneMenu value = "#{user.address}">
+				<f:selectItem itemValue="Nam Dinh" itemLabel="Nam Dinh" />
+				<f:selectItem itemValue="Ha Noi" itemLabel="Ha Noi" />
+				<f:selectItem itemValue="TP HCM" itemLabel="TP HCM" />
+				<f:selectItem itemValue="Da Nang" itemLabel="Da Nang" />
+			</h:selectOneMenu>
+			<h:outputLabel value="Hobby" />
+			<h:selectManyCheckbox value="#{user.hobby}">
+				<f:selectItem itemValue="Sport" itemLabel="Sport" />
+				<f:selectItem itemValue="Music" itemLabel="Music" />
+				<f:selectItem itemValue="Dance" itemLabel="Dance" />
+			</h:selectManyCheckbox>
+
+			<f:facet name="footer">
+				<h:panelGroup style="display:block; text-align:center">
+					<h:commandButton value="Submit" action="result" />
+				</h:panelGroup>	
+			</f:facet>
+		</h:panelGrid>
+	</h:form>
+	
+	<!-- <script type="text/javascript">
+
+		function ok() {
+			var name = ${'#username'};
+			alert(name);
+		}
+	
+	</script> -->
+</h:body>
+</html>
