@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<head>
+<title>JSF Tutorial Synergixtech!</title>
+</head>
+
+<body>
+	<h2>h:inputText example</h2>
+	<hr />
+
+	<h:form id="jsfForm1">
+		<h3>Read-Only input text box</h3>
+		<h:inputText value="doanxuantung@gmail.com" readonly="true"
+			style="width: 100px" title="Không thể sửa thông tin" />
+		<h3>Read-Only input text box</h3>
+		<h:inputText value="30/01/96" disabled="true" style="width: 100px"
+			title="Đã bị disable" />
+		<h3>Read-Only input text box</h3>
+		<h4>Username:</h4>
+		<h:inputText style="width: 100px" title="Nhập thông tin" />
+		<h4>Password:</h4>
+		<h:inputSecret style="width: 100px" title="Nhập thông tin" />
+		<h:inputHidden value="Hello World" id="hiddenField" />
+		<br />
+		<h:selectBooleanCheckbox value="Remember Me" id="chkRememberMe"
+			onchange="showCheckedValue()" /> Nhớ mật khẩu
+		
+		<h:selectManyCheckbox value="#{userData.data}">
+			<f:selectItem itemValue="1" itemLabel="Item 1" />
+			<f:selectItem itemValue="2" itemLabel="Item 2" />
+		</h:selectManyCheckbox>
+	</h:form>
+
+	<script type="text/javascript">
+       function showCheckedValue() { 
+          alert(document.getElementById('jsfForm1:chkRememberMe').checked);	 
+       }
+    </script>
+</body>
+</html>
