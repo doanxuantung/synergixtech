@@ -1,32 +1,32 @@
 @charset "UTF-8";
 
-	.userTable {
-		border-collapse: collapse;
-		border: 1px solid #000000;
-	}
+#panel {
+	margin-left: 40%;
+	margin-top: 10%;
+}
 
-	.userTableHeader {
-		text-align: center;
-		background: none repeat scroll 0 0 #B5B5B5;
-		border-bottom: 1px solid #000000;
-		padding: 2px;
-	}
+#tbUser {
+	margin: 100px;
+}
 
-	.userTableOddRow {
-		text-align: center;
-		background: none repeat scroll 0 0 #FFFFFFF;
-	}
+.userTable {
+	border-collapse: collapse;
+	border: 1px solid #000000;
+}
 
-	.userTableEvenRow {
-		text-align: center;
-		background: none repeat scroll 0 0 #D3D3D3;
-	}
+.userTableHeader {
+	text-align: center;
+	background: none repeat scroll 0 0 #B5B5B5;
+	border-bottom: 1px solid #000000;
+	padding: 2px;
+}
 
-	#panel {
-		margin-left: 40%;
-		margin-top: 10%;
-	}
-	
-	#tbUser {
-		margin: 100px;
-	}
+.userTableOddRow {
+	text-align: center;
+	background: none repeat scroll 0 0 #FFFFFFF;
+}
+
+.userTableEvenRow {
+	text-align: center;
+	background: none repeat scroll 0 0 #D3D3D3;
+}
