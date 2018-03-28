@@ -7,19 +7,17 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
-	<title>JSF tutorial</title>
-	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 
 <h:body>
 	<h2>DataTable Example</h2>
 
 	<h:form>
-		<h:dataTable value="#{userData.getListUser()}" var="user"
-			styleClass="employeeTable" headerClass="employeeTableHeader"
-			rowClasses="employeeTableOddRow,employeeTableEvenRow">
+		<h:dataTable styleClass="tbUser" value="#{userData.getListUser()}"
+			var="user">
 
-			<h:column>
+			<h:column style="width: 100px">
 				<f:facet name="header">Id</f:facet>    				
                #{user.id}
             </h:column>
