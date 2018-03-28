@@ -1,32 +1,31 @@
-@charset "UTF-8";
+	.panel {
+		margin-left: 42%;
+		margin-top: 5%;
+	}
+	
+	.userTable {
+		border-collapse: collapse;
+		border: 1px solid #000000;
+		margin-left: 40%;
+	}
+	
+	.userTableHeader {
+		text-align: center;
+		background: none repeat scroll 0 0 #B5B5B5;
+		border-bottom: 1px solid #000000;
+		padding: 5px;
+	}
 
-#panel {
-	margin-left: 40%;
-	margin-top: 10%;
-}
+	.userTableOddRow {
+		text-align: center;
+		background: none repeat scroll 0 0 #FFFFFFF;
+		padding: 10px;
+	}
 
-#tbUser {
-	margin: 100px;
-}
+	.userTableEvenRow {
+		text-align: center;
+		background: none repeat scroll 0 0 #D3D3D3;
+		padding-left: 10px;
+	}
 
-.userTable {
-	border-collapse: collapse;
-	border: 1px solid #000000;
-}
-
-.userTableHeader {
-	text-align: center;
-	background: none repeat scroll 0 0 #B5B5B5;
-	border-bottom: 1px solid #000000;
-	padding: 2px;
-}
-
-.userTableOddRow {
-	text-align: center;
-	background: none repeat scroll 0 0 #FFFFFFF;
-}
-
-.userTableEvenRow {
-	text-align: center;
-	background: none repeat scroll 0 0 #D3D3D3;
-}
+	
