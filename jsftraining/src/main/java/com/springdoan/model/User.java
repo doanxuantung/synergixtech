@@ -2,11 +2,10 @@ package com.springdoan.model;
 
 import java.io.Serializable;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 
-@ManagedBean(name = "user", eager = true)
+@Named
 @RequestScoped
 public class User implements Serializable {
 
@@ -76,5 +75,4 @@ public class User implements Serializable {
 		this.hobby = hobby;
 	}
 
-	
 }

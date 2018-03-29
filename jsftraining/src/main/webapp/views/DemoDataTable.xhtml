@@ -15,32 +15,32 @@
 	<h2>DataTable Example</h2>
 
 	<h:form>
-	<h:dataTable value="#{userData.listUser}" var="account"
-		styleClass="userTable" headerClass="userTableHeader"
-		rowClasses="userTableOddRow,userTableEvenRow">
+		<h:dataTable value="#{userController.getUsers()}" var="user"
+			styleClass="userTable" headerClass="userTableHeader"
+			rowClasses="userTableOddRow,userTableEvenRow">
 
-		<h:column style="width: 100px">
-			<f:facet name="header">Id</f:facet>    				
-               #{account.id}
+			<h:column style="width: 100px">
+				<f:facet name="header">Id</f:facet>    				
+               #{user.id}
             </h:column>
 
-		<h:column>
-			<f:facet name="header">Name</f:facet>
-               #{account.username}
+			<h:column>
+				<f:facet name="header">Name</f:facet>
+               #{user.username}
             </h:column>
 
-		<h:column>
-			<f:facet name="header">Pass</f:facet>
-               #{account.password}
+			<h:column>
+				<f:facet name="header">Pass</f:facet>
+               #{user.password}
             </h:column>
 
-		<h:column>
-			<f:facet name="header">Sex</f:facet>
-               #{account.sex}
+			<h:column>
+				<f:facet name="header">Sex</f:facet>
+               #{user.sex}
             </h:column>
-	</h:dataTable>
-	<br />
-	<hr />
+		</h:dataTable>
+		<br />
+		<hr />
 
 		<h:panelGrid styleClass="panel" columns="2" border="1"
 			cellpadding="10" cellspacing="1">
@@ -64,11 +64,11 @@
 				<f:selectItem itemValue="Male" itemLabel="Male" />
 				<f:selectItem itemValue="Female" itemLabel="Female" />
 			</h:selectOneRadio>
-			
+
 
 			<f:facet name="footer">
 				<h:panelGroup style="display:block; text-align:center">
-					<h:commandButton value="ok" action="#{userData.getUserN}" />
+					<h:commandButton value="ok" action="#{userControlle}" />
 				</h:panelGroup>
 			</f:facet>
 		</h:panelGrid>
