@@ -11,14 +11,11 @@
 	<h2>Result Information User</h2>
 	<hr />
 	<h:outputFormat
-		value="Username: {0}, Password: {1}, Sex: {2}">
-		<f:param value="#{user.username}" />
-		<f:param value="#{user.password}" />
-		<f:param value="#{user.sex}" />
+		value="Username: {0}, Password: {1}, Sex: {2}, Address: {3}">
+		<f:param value="#{userController.user.username}" />
+		<f:param value="#{userController.user.password}" />
+		<f:param value="#{userController.user.sex}" />
+		<f:param value="#{userController.user.address}" />
 	</h:outputFormat>
-	<h:outputText value=", Hobby: "/>
-	<ui:repeat value="#{user.hobby}" var="s">
-		<h:outputText value="#{s}," />
-	</ui:repeat>
 </h:body>
 </html>

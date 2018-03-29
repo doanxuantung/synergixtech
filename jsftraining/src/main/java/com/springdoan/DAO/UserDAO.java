@@ -1,20 +1,34 @@
 package com.springdoan.DAO;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.springdoan.model.User;
 
 public class UserDAO {
-	Connection conn;
+	private static Connection conn = ConnectDB.getConnectDB();
 
 	public UserDAO() {
-		System.out.println("Connected db");
 	}
 
 	public List<User> getListUser() {
-		return new ArrayList<>(Arrays.asList(new User(1, "John1@gmail.com", "John123", "Male", "Ha Noi")));
+
+		List<User> lstUser = new ArrayList<>();
+		String sql = "SELECT * FROM user";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+				lstUser.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lstUser;
 	}
 }

@@ -15,7 +15,7 @@
 	<h2>DataTable Example</h2>
 
 	<h:form>
-		<h:dataTable value="#{userController.getUsers()}" var="user"
+		<h:dataTable value="#{userController.listUsers()}" var="user"
 			styleClass="userTable" headerClass="userTableHeader"
 			rowClasses="userTableOddRow,userTableEvenRow">
 
@@ -53,14 +53,14 @@
 
 			<h:outputLabel value="Username" />
 			<h:inputText id="username" a:placeholder="Username"
-				style="width:100%" value="#{user.username}" required="true">
+				style="width:100%" value="#{userController.user.username}" required="true">
 				<f:validateLength minimum="5" />
 			</h:inputText>
 			<h:outputLabel value="Password"></h:outputLabel>
 			<h:inputSecret a:placeholder="Password" style="width:100%"
-				value="#{user.password}" />
+				value="#{userController.user.password}" />
 			<h:outputLabel value="Sex?" />
-			<h:selectOneRadio value="#{user.sex}">
+			<h:selectOneRadio value="#{userController.user.username.sex}">
 				<f:selectItem itemValue="Male" itemLabel="Male" />
 				<f:selectItem itemValue="Female" itemLabel="Female" />
 			</h:selectOneRadio>
@@ -68,7 +68,7 @@
 
 			<f:facet name="footer">
 				<h:panelGroup style="display:block; text-align:center">
-					<h:commandButton value="ok" action="#{userControlle}" />
+					<h:commandButton value="ok" action="result?faces-redirect=true" />
 				</h:panelGroup>
 			</f:facet>
 		</h:panelGrid>

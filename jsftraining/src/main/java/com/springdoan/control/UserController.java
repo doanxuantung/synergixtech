@@ -15,16 +15,38 @@ import com.springdoan.model.User;
 public class UserController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Inject
 	private User user;
 
-	/*
-	 * public void addUser() { for (User user : users) {
-	 * System.out.println(user.getId() + user.getUsername()); }
-	 * System.out.println(user.getUsername()); users.add(user); }
-	 */
-	public List<User> getUsers() {
-		return new UserDAO().getListUser();
+	@Inject
+	UserDAO userDAO;
+
+	public UserController() {
+		super();
+	}
+
+	public List<User> listUsers() {
+		List<User> lstUser = userDAO.getListUser();
+		System.out.println(lstUser.size());
+		for (User user : lstUser) {
+			System.out.println(user.getUsername());
+		}
+		return lstUser;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
+
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 
 }

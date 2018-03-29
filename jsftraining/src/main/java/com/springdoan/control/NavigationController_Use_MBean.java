@@ -1,9 +1,5 @@
 package com.springdoan.control;
 
-import java.io.Serializable;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 
 /*@SuppressWarnings("serial")
 @ManagedBean(name = "navigationController_Use_MBean", eager = true)

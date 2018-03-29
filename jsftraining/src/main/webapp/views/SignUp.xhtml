@@ -22,33 +22,28 @@
 			</f:facet>
 
 			<h:outputLabel value="Username" />
-			<h:inputText id="username" a:placeholder="Username" style="width:100%" value = "#{user.username}" required="true">
+			<h:inputText id="username" a:placeholder="Username" style="width:100%" value="#{userController.user.username}" required="true">
 				<f:validateLength minimum = "5" /> 
 			</h:inputText>
 			<h:outputLabel value="Password" ></h:outputLabel>
-			<h:inputSecret a:placeholder="Password" style="width:100%" value = "#{user.password}" />
+			<h:inputSecret a:placeholder="Password" style="width:100%" value = "#{userController.user.password}" />
 			<h:outputLabel value="Sex?"/>
-			<h:selectOneRadio value = "#{user.sex}">
+			<h:selectOneRadio value = "#{userController.user.sex}">
 				<f:selectItem itemValue="Male" itemLabel="Male" />
 				<f:selectItem itemValue="Female" itemLabel="Female" />
 			</h:selectOneRadio>
 			<h:outputLabel value="Address?" />
-			<h:selectOneMenu value = "#{user.address}">
+			<h:selectOneMenu value = "#{userController.user.address}">
 				<f:selectItem itemValue="Nam Dinh" itemLabel="Nam Dinh" />
 				<f:selectItem itemValue="Ha Noi" itemLabel="Ha Noi" />
 				<f:selectItem itemValue="TP HCM" itemLabel="TP HCM" />
 				<f:selectItem itemValue="Da Nang" itemLabel="Da Nang" />
 			</h:selectOneMenu>
-			<h:outputLabel value="Hobby" />
-			<h:selectManyCheckbox value="#{user.hobby}">
-				<f:selectItem itemValue="Sport" itemLabel="Sport" />
-				<f:selectItem itemValue="Music" itemLabel="Music" />
-				<f:selectItem itemValue="Dance" itemLabel="Dance" />
-			</h:selectManyCheckbox>
+			
 
 			<f:facet name="footer">
 				<h:panelGroup style="display:block; text-align:center">
-					<h:commandButton value="Submit" action="result?faces-redirect = true" />
+					<h:commandButton value="Submit" action="result?faces-redirect=true" />
 				</h:panelGroup>	
 			</f:facet>
 		</h:panelGrid>

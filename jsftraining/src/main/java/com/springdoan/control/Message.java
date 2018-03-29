@@ -6,7 +6,7 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean(name="message", eager = true)
 @RequestScoped
 public class Message {
-	private String message = "Hello world spring12 !";
+	private String message = "Training JSF!";
 
 	public String getMessage() {
 		return message;
