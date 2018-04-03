@@ -11,6 +11,7 @@
 	
 	.userTableHeader {
 		text-align: center;
+		color: blue;
 		background: none repeat scroll 0 0 #B5B5B5;
 		border-bottom: 1px solid #000000;
 		padding: 5px;

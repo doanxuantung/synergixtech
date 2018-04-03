@@ -17,6 +17,7 @@ public class UserDAO {
 
 	public List<User> getListUser() {
 
+		System.out.println("Truy cap");
 		List<User> lstUser = new ArrayList<>();
 		String sql = "SELECT * FROM user";
 		try {
@@ -30,5 +31,37 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return lstUser;
+	}
+
+	public boolean addUser(User user) {
+		String sql = "INSERT INTO user(username,password,sex) VALUES (?,?,?)";
+
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, user.getUsername());
+			ps.setString(2, user.getPassword());
+			ps.setString(3, user.getSex());
+			ps.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean deleteUser(User user) {
+		String sql = "DELETE FROM user WHERE id = ?";
+
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, user.getId());
+			ps.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

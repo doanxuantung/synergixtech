@@ -14,34 +14,57 @@
 <h:body>
 	<h2>DataTable Example</h2>
 
+
 	<h:form>
 		<h:dataTable value="#{userController.listUsers()}" var="user"
 			styleClass="userTable" headerClass="userTableHeader"
 			rowClasses="userTableOddRow,userTableEvenRow">
-
 			<h:column style="width: 100px">
-				<f:facet name="header">Id</f:facet>    				
-               #{user.id}
-            </h:column>
+				<f:facet name="header">check</f:facet>
+				#{user.editable}
+			</h:column>
+			<h:column style="width: 100px">
+				<f:facet name="header">Id</f:facet>
+				<h:inputText value="#{user.id}" size="10"
+					rendered="#{user.editable}" />
+				<h:outputText value="#{user.id}" rendered="#{not user.editable}" />
+			</h:column>
 
 			<h:column>
 				<f:facet name="header">Name</f:facet>
-               #{user.username}
-            </h:column>
+				<h:inputText styleClass="demo" value="#{user.username}" size="10"
+					rendered="#{user.editable}" />
+				<h:outputText value="#{user.username}"
+					rendered="#{not user.editable}" />
+			</h:column>
 
 			<h:column>
 				<f:facet name="header">Pass</f:facet>
-               #{user.password}
-            </h:column>
+				<h:inputText value="#{user.password}" size="10"
+					rendered="#{user.editable}" />
+				<h:outputText value="#{user.password}"
+					rendered="#{not user.editable}" />
+			</h:column>
 
 			<h:column>
 				<f:facet name="header">Sex</f:facet>
-               #{user.sex}
-            </h:column>
+				<h:inputText value="#{user.sex}" size="10"
+					rendered="#{user.editable}" />
+				<h:outputText value="#{user.sex}" rendered="#{not user.editable}" />
+			</h:column>
+			<h:column>
+				<h:commandButton value="Delete"
+					action="#{userController.deleteUser(user)}" />
+			</h:column>
+			<h:column>
+				<h:commandButton value="Edit"
+					action="#{userController.editAction(user)}" rendered="#{not user.editable}" />
+			</h:column>
 		</h:dataTable>
+	</h:form>
+	<h:form>
 		<br />
 		<hr />
-
 		<h:panelGrid styleClass="panel" columns="2" border="1"
 			cellpadding="10" cellspacing="1">
 
@@ -52,23 +75,22 @@
 			</f:facet>
 
 			<h:outputLabel value="Username" />
-			<h:inputText id="username" a:placeholder="Username"
-				style="width:100%" value="#{userController.user.username}" required="true">
+			<h:inputText id="username" value="#{userController.user.username}"
+				a:placeholder="Username" style="width:100%" required="true">
 				<f:validateLength minimum="5" />
 			</h:inputText>
 			<h:outputLabel value="Password"></h:outputLabel>
 			<h:inputSecret a:placeholder="Password" style="width:100%"
 				value="#{userController.user.password}" />
 			<h:outputLabel value="Sex?" />
-			<h:selectOneRadio value="#{userController.user.username.sex}">
+			<h:selectOneRadio value="#{userController.user.sex}">
 				<f:selectItem itemValue="Male" itemLabel="Male" />
 				<f:selectItem itemValue="Female" itemLabel="Female" />
 			</h:selectOneRadio>
 
-
 			<f:facet name="footer">
 				<h:panelGroup style="display:block; text-align:center">
-					<h:commandButton value="ok" action="result?faces-redirect=true" />
+					<h:commandButton value="add" action="#{userController.addUser()}" />
 				</h:panelGroup>
 			</f:facet>
 		</h:panelGrid>

@@ -3,22 +3,20 @@ package com.springdoan.control;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import com.springdoan.DAO.UserDAO;
 import com.springdoan.model.User;
 
 @Named
-@RequestScoped
+@SessionScoped
 public class UserController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private User user;
+	private User user = new User();
 
-	@Inject
-	UserDAO userDAO;
+	private UserDAO userDAO = new UserDAO();
 
 	public UserController() {
 		super();
@@ -26,7 +24,6 @@ public class UserController implements Serializable {
 
 	public List<User> listUsers() {
 		List<User> lstUser = userDAO.getListUser();
-		System.out.println(lstUser.size());
 		for (User user : lstUser) {
 			System.out.println(user.getUsername());
 		}
@@ -41,12 +38,23 @@ public class UserController implements Serializable {
 		this.user = user;
 	}
 
-	public UserDAO getUserDAO() {
-		return userDAO;
+	public void addUser() {
+		userDAO.addUser(user);
 	}
 
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
+	public void deleteUser(User userRecieve) {
+		// lstUser.remove(userRecieve);
+		userDAO.deleteUser(userRecieve);
+	}
+
+	public String editAction(User userRecieve) {
+		userRecieve.setEditable(true);
+		System.out.println(userRecieve.isEditable());
+		return null;
+	}
+
+	public void updateUser(User userRecieve) {
+		userDAO.deleteUser(userRecieve);
 	}
 
 }

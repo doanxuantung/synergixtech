@@ -2,7 +2,6 @@ package com.springdoan.model;
 
 import java.io.Serializable;
 
-
 public class User implements Serializable {
 
 	/**
@@ -15,6 +14,7 @@ public class User implements Serializable {
 	private String sex;
 	private String address;
 	private String[] hobby;
+	private boolean editable;
 
 	public User() {
 	}
@@ -27,6 +27,14 @@ public class User implements Serializable {
 		this.address = address;
 	}
 
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean edittable) {
+		this.editable = edittable;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -36,7 +44,6 @@ public class User implements Serializable {
 	}
 
 	public String getUsername() {
-		/* System.out.println(this.username); */
 		return username;
 	}
 
