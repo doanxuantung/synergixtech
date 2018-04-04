@@ -5,9 +5,10 @@
 	<persistence-unit name="jsftraining">
 	</persistence-unit>
 
-	<persistence-unit name="persistence"
-		transaction-type="RESOURCE_LOCAL">
-		<class>Account.java</class>
+	<persistence-unit name="mypersistence" transaction-type="RESOURCE_LOCAL">
+		<description>My Persistence Unit</description>
+		<mapping-file>META-INF/persistence.xml</mapping-file>
+		<class>com.springdoan.model.User</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/synergixtech" />

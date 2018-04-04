@@ -20,45 +20,27 @@
 			styleClass="userTable" headerClass="userTableHeader"
 			rowClasses="userTableOddRow,userTableEvenRow">
 			<h:column style="width: 100px">
-				<f:facet name="header">check</f:facet>
-				#{user.editable}
-			</h:column>
-			<h:column style="width: 100px">
 				<f:facet name="header">Id</f:facet>
-				<h:inputText value="#{user.id}" size="10"
-					rendered="#{user.editable}" />
-				<h:outputText value="#{user.id}" rendered="#{not user.editable}" />
+				<h:inputText value="#{user.id}" size="10"/>
 			</h:column>
 
 			<h:column>
 				<f:facet name="header">Name</f:facet>
-				<h:inputText styleClass="demo" value="#{user.username}" size="10"
-					rendered="#{user.editable}" />
-				<h:outputText value="#{user.username}"
-					rendered="#{not user.editable}" />
+				<h:inputText styleClass="demo" value="#{user.username}" size="10" />
 			</h:column>
 
 			<h:column>
 				<f:facet name="header">Pass</f:facet>
-				<h:inputText value="#{user.password}" size="10"
-					rendered="#{user.editable}" />
-				<h:outputText value="#{user.password}"
-					rendered="#{not user.editable}" />
+				<h:inputText value="#{user.password}" size="10" />
 			</h:column>
 
 			<h:column>
 				<f:facet name="header">Sex</f:facet>
-				<h:inputText value="#{user.sex}" size="10"
-					rendered="#{user.editable}" />
-				<h:outputText value="#{user.sex}" rendered="#{not user.editable}" />
+				<h:inputText value="#{user.sex}" size="10"/>
 			</h:column>
 			<h:column>
 				<h:commandButton value="Delete"
 					action="#{userController.deleteUser(user)}" />
-			</h:column>
-			<h:column>
-				<h:commandButton value="Edit"
-					action="#{userController.editAction(user)}" rendered="#{not user.editable}" />
 			</h:column>
 		</h:dataTable>
 	</h:form>

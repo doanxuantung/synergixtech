@@ -2,19 +2,36 @@ package com.springdoan.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "user")
 public class User implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+
+	@Column(name = "username")
 	private String username;
+
+	@Column(name = "password")
 	private String password;
+
+	@Column(name = "sex")
 	private String sex;
+
 	private String address;
-	private String[] hobby;
-	private boolean editable;
+
 
 	public User() {
 	}
@@ -25,14 +42,6 @@ public class User implements Serializable {
 		this.password = password;
 		this.sex = sex;
 		this.address = address;
-	}
-
-	public boolean isEditable() {
-		return editable;
-	}
-
-	public void setEditable(boolean edittable) {
-		this.editable = edittable;
 	}
 
 	public int getId() {
@@ -73,14 +82,6 @@ public class User implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String[] getHobby() {
-		return hobby;
-	}
-
-	public void setHobby(String[] hobby) {
-		this.hobby = hobby;
 	}
 
 }

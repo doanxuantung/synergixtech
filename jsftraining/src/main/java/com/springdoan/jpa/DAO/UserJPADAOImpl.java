@@ -1,11 +1,17 @@
 package com.springdoan.jpa.DAO;
 
+import java.util.List;
+
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.*;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
-import com.springdoan.model.Account;
+import com.springdoan.model.User;
 
+@Named
 public class UserJPADAOImpl implements UserJPADAO {
 
 	private static EntityManagerFactory emf;
@@ -13,27 +19,34 @@ public class UserJPADAOImpl implements UserJPADAO {
 	private static EntityTransaction et;
 	
 	public UserJPADAOImpl() {
-		emf = Persistence.createEntityManagerFactory("persistence");
+		emf = Persistence.createEntityManagerFactory("mypersistence");
 		em = emf.createEntityManager();
 		et = em.getTransaction();
 	}
 	
 	@Override
-	public void save(Account account) {
-		
-		et.begin();
-		em.persist(account);
-		et.commit();
-		em.close();
-	}
-	
-	public static void main(String[] args) {
+	public void save(User user) {
 
-		Account account = new Account();
-		account.setUsername("doanxuantung@gmail.com");
-		account.setPassword("1235897456");
-		account.setSex("Male");
-		new UserJPADAOImpl().save(account);
+		et.begin();
+		em.persist(user);
+		et.commit();
+	}
+
+	@Override
+	public void remove(User user) {
+		et.begin();
+		em.remove(user);
+		et.commit();
+
+	}
+
+	@Override
+	public List<User> getListUser() {
+		System.out.println("truy van");
+		et.begin();
+		Query query = em.createQuery("Select u from User u");
+		et.commit();
+		return query.getResultList();
 	}
 
 }
