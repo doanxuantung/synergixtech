@@ -32,6 +32,7 @@ public class User implements Serializable {
 
 	private String address;
 
+	// @Transient private boo
 
 	public User() {
 	}
