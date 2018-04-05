@@ -11,4 +11,6 @@ public interface UserJPADAO {
 
 	public List<User> getListUser();
 
+	public User checkUser(String username, String pass);
+
 }

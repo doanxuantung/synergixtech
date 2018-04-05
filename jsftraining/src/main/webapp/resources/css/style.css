@@ -1,12 +1,17 @@
 	.panel {
-		margin-left: 42%;
+		margin-left: 38%;
 		margin-top: 5%;
+		width: 18%;
+		height: 30%;
+		background: url("images/Image2.jpg") 0px 80px no-repeat;
 	}
 	
 	.userTable {
 		border-collapse: collapse;
 		border: 1px solid #000000;
 		margin-left: 40%;
+		width: 300px;
+		height: 500px;
 	}
 	
 	.userTableHeader {

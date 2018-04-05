@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "user")
@@ -18,7 +19,7 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name = "username")
@@ -30,19 +31,24 @@ public class User implements Serializable {
 	@Column(name = "sex")
 	private String sex;
 
-	private String address;
-
-	// @Transient private boo
+	@Transient
+	private boolean canEdit = false;
 
 	public User() {
 	}
 
-	public User(int id, String username, String password, String sex, String address) {
+	public User(int id, String username, String password, String sex) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.sex = sex;
-		this.address = address;
+	}
+
+	public User(String username, String password, String sex) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.sex = sex;
 	}
 
 	public int getId() {
@@ -77,12 +83,12 @@ public class User implements Serializable {
 		this.sex = sex;
 	}
 
-	public String getAddress() {
-		return address;
+	public boolean canEdit() {
+		return canEdit;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setEdit(boolean canEdit) {
+		this.canEdit = canEdit;
 	}
 
 }

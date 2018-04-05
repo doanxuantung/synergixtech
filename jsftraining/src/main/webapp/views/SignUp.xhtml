@@ -32,18 +32,11 @@
 				<f:selectItem itemValue="Male" itemLabel="Male" />
 				<f:selectItem itemValue="Female" itemLabel="Female" />
 			</h:selectOneRadio>
-			<h:outputLabel value="Address?" />
-			<h:selectOneMenu value = "#{userController.user.address}">
-				<f:selectItem itemValue="Nam Dinh" itemLabel="Nam Dinh" />
-				<f:selectItem itemValue="Ha Noi" itemLabel="Ha Noi" />
-				<f:selectItem itemValue="TP HCM" itemLabel="TP HCM" />
-				<f:selectItem itemValue="Da Nang" itemLabel="Da Nang" />
-			</h:selectOneMenu>
 			
 
 			<f:facet name="footer">
 				<h:panelGroup style="display:block; text-align:center">
-					<h:commandButton value="Submit" action="result?faces-redirect=true" />
+					<h:commandButton value="Submit" action="#{userController.addUser()}" />
 				</h:panelGroup>	
 			</f:facet>
 		</h:panelGrid>

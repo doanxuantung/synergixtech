@@ -24,7 +24,7 @@ public class UserDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+				User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
 				lstUser.add(user);
 			}
 		} catch (SQLException e) {

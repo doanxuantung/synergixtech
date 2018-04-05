@@ -6,17 +6,15 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-<f:event listener="#{userController.listUsers()}" type="preRenderView"></f:event>
 <h:head>
 	<h:outputStylesheet library="css" name="style.css" />
+	<f:event listener="#{userController.listUsers()}" type="preRenderView"></f:event>
 </h:head>
 
 <h:body>
-	<h2>Demo DataTable</h2>
-
-
-	<h:form id="tableUser">
-		<h:dataTable rendered="#{not empty userController.list}" value="#{userController.list}" var="user"
+	<h2>List User</h2>
+	<h:form>
+		<h:dataTable id="tableUser" rendered="#{not empty userController.lstUser}" value="#{userController.lstUser}" var="user"
 			styleClass="userTable" headerClass="userTableHeader"
 			rowClasses="userTableOddRow,userTableEvenRow">
 			<h:column style="width: 100px">
@@ -39,13 +37,11 @@
 				<h:inputText value="#{user.sex}" size="10"/>
 			</h:column>
 			<h:column>
-				<h:commandButton value="Delete"
-					action="#{userController.deleteUser(user)}" >	
-					</h:commandButton>
+				<h:commandButton value="Delete" action="#{userController.deleteUser(user)}">
+				<f:ajax  event="click" render="tableUser"></f:ajax>
+				</h:commandButton>
 			</h:column>
 		</h:dataTable>
-	</h:form>
-	<h:form id="addForm">
 		<br />
 		<hr />
 		<h:panelGrid styleClass="panel" columns="2" border="1"
