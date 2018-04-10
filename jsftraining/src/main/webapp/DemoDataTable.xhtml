@@ -1,0 +1,121 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<h:outputStylesheet library="css" name="style.css" />
+	<f:event listener="#{userController.listUsers()}" type="preRenderView"></f:event>
+</h:head>
+
+<h:body>
+
+	<h:form>
+	 
+	    <p:menuButton value="Options">
+	        <p:menuitem value="Add User" oncomplete="PF('addDialog').show()" title="View Add User" icon="ui-icon-plus ui-icon-person"/>
+	        <p:menuitem value="Update" actionListener="#" icon="ui-icon-newwin"/>
+	        <p:menuitem value="Delete" actionListener="#" ajax="false" icon="ui-icon-person"/>
+	        <p:separator />
+	        <p:menuitem value="Sign out" url="Login.xhtml" icon="ui-icon-extlink"/>
+	    </p:menuButton>
+	</h:form>
+
+	<h:form>
+		<p:growl/>
+		
+		<p:dataTable id="tblUser" rendered="#{not empty userController.lstUser}"
+			value="#{userController.lstUser}" var="user"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} "
+			paginator="true" rows="5"
+			style="margin:auto; width: 70%; margin-top: 10%">
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="isEdit" />
+				</f:facet>
+				<h:outputText value="#{user.canEdit()}" />
+			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Id" />
+				</f:facet>
+				<h:outputText value="#{user.id}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Username" />
+				</f:facet>
+				<h:outputText value="#{user.username}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Password" />
+				</f:facet>
+				<h:outputText value="#{user.password}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Sex" />
+				</f:facet>
+				<h:outputText value="#{user.sex}" />
+			</p:column>
+			<p:column style="padding: auto">
+				<f:facet name="header">
+					<h:outputText value="Delete" />
+				</f:facet>
+				<p:commandButton  icon="ui-icon-trash" update="tblUser" title="Delete User" actionListener="#{userController.deleteUser(user)}" />
+				<p:commandButton  icon="ui-icon-pencil" update="tblUser" title="Update User" actionListener="#{userController.editUser(user)}" />
+			</p:column>
+		</p:dataTable>
+
+		<p:commandLink update="addUser" oncomplete="PF('addDialog').show()"	title="View Add User">
+			<h:outputText styleClass="icon-search" style="margin:0 auto" />
+		</p:commandLink>
+
+		<p:dialog header="Add User" widgetVar="addDialog" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="false">
+			
+			<p:outputPanel id="addUser" style="text-align:center;">
+				<h:panelGrid styleClass="panel" columns="2" border="1"
+					cellpadding="10" cellspacing="1">
+
+					<f:facet name="header">
+						<h:graphicImage value="../resources/images/icon_synergixtech.jpg"
+							width="200px" />
+					</f:facet>
+
+					<h:outputLabel value="Username" />
+					<h:inputText value="#{userController.user.username}"
+						a:placeholder="Username" style="width:100%" required="true">
+						<f:validateLength minimum="5" />
+					</h:inputText>
+					<h:outputLabel value="Password"></h:outputLabel>
+					<h:inputSecret a:placeholder="Password" style="width:100%"
+						value="#{userController.user.password}" />
+					<h:outputLabel value="Sex?" />
+					<h:selectOneRadio value="#{userController.user.sex}">
+						<f:selectItem itemValue="Male" itemLabel="Male" />
+						<f:selectItem itemValue="Female" itemLabel="Female" />
+					</h:selectOneRadio>
+
+					<f:facet name="footer">
+						<h:panelGroup style="display:block; text-align:center">
+							<h:commandButton value="add" action="#{userController.addUser()}">
+							</h:commandButton>
+						</h:panelGroup>
+					</f:facet>
+				</h:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>

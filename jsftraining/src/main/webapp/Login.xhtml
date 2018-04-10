@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+
+<h:body>
+	<h:form>
+		<p:growl />
+		<p:panel header="Login" style="margin-bottom:10px;margin-left: 38%;	margin-top: 5%;	width:26%;height: 30%">
+			<h:panelGrid styleClass="panel" columns="3" cellpadding="10"
+				cellspacing="1">
+
+				<f:facet name="header">
+					<h:graphicImage value="resources/images/icon_synergixtech.jpg"
+						width="200px" />
+				</f:facet>
+
+				<h:outputLabel value="Username" />
+				<p:inputText id="username" value="#{userController.user.username}"
+					a:placeholder="Username" size="30" required="true"
+					label="User Name ">
+					<f:validateLength minimum="5" maximum="30" />
+					<f:validator validatorId="com.springdoan.EmailValidator" />
+				</p:inputText>
+				<!-- <p:message for="username" /> -->
+
+				<h:outputLabel value="Password"></h:outputLabel>
+				<p:password id="password" value="#{userController.user.password}"
+					a:placeholder="Passwork" size="30" required="true" label="Password ">
+					<f:validateLength minimum="5" maximum="30" />
+				</p:password>
+				<!-- <p:message for="password" /> -->
+
+				<f:facet name="footer">
+					<h:panelGroup style="display:block; text-align:center">
+						<h:commandButton value="Sign In" icon="ui-icon-check"
+							action="#{userController.login()}">
+						</h:commandButton>
+					</h:panelGroup>
+				</f:facet>
+				<!-- <h:panelGroup style="display:block; text-align:center">
+					<h:message for="username" style="color:red; backgroud-color: blue" />
+					<br />
+					<h:message for="password" style="color:red; backgroud-color: blue" />
+					<h:outputText id="load_fail"
+						style="color:red; backgroud-color: blue"
+						value="#{userController.kq != null ? userController.kq : ''}" />
+				</h:panelGroup>
+			</f:facet> -->
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

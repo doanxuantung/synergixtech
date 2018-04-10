@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 
 import com.springdoan.model.User;
 
-@Transactional(rollbackOn = Transactional.TxType.)
+@Transactional(rollbackOn = Exception.class)
 public class UserJPADAOImpl implements UserJPADAO {
 
 	private EntityManagerFactory emf;

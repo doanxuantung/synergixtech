@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.springdoan.jpa.DAO.UserJPADAOImpl;
@@ -19,8 +21,17 @@ public class UserController implements Serializable {
 	private User user = new User();
 
 	private UserJPADAOImpl userJPADAOImpl = new UserJPADAOImpl();
+	private String kq = "";
 
 	public UserController() {
+	}
+
+	public String getKq() {
+		return kq;
+	}
+
+	public void setKq(String kq) {
+		this.kq = kq;
 	}
 
 
@@ -28,10 +39,12 @@ public class UserController implements Serializable {
 		User usertemp = new User(user.getUsername(), user.getPassword(), user.getSex());
 		usertemp.setId(0);
 		userJPADAOImpl.save(usertemp);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Thông báo : Thêm thành công"));
 	}
 
 	public void deleteUser(User userRecieve) {
 		userJPADAOImpl.remove(userRecieve);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Thông báo : Xóa thành công"));
 	}
 
 	public void editUser(User userRecieve) {
@@ -47,7 +60,9 @@ public class UserController implements Serializable {
 		if (user != null) {
 			return "DemoDataTable?faces-redirect=true";
 		}
-		return "Login?faces-redirect=true";
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage("Login : Bạn đã nhập sai tên tài khoản hoặc mật khẩu"));
+		return "";
 	}
 
 	public User getUser() {
@@ -69,5 +84,20 @@ public class UserController implements Serializable {
 	public void listUsers() {
 		this.lstUser = userJPADAOImpl.getListUser();
 	}
+
+	public String demoAjax() {
+		kq = "ketqua: " + user.getUsername();
+		return kq;
+	}
+
+	// public void displayLocation() {
+	// FacesMessage msg;
+	// msg = new FacesMessage("Selected", " of ");
+	// // msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid", "City is
+	// not
+	// // selected.");
+	//
+	// FacesContext.getCurrentInstance().addMessage(null, msg);
+	// }
 
 }
