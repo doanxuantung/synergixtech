@@ -9,6 +9,9 @@
 		<description>My Persistence Unit</description>
 		<mapping-file>META-INF/persistence.xml</mapping-file>
 		<class>com.springdoan.model.User</class>
+		<class>com.springdoan.model.Address</class>
+		<class>com.springdoan.model.Product</class>
+		<class>com.springdoan.model.Product_buy</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/synergixtech" />

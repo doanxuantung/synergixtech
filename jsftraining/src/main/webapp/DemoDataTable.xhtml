@@ -15,75 +15,113 @@
 <h:body>
 
 	<h:form>
-	 
-	    <p:menuButton value="Options">
-	        <p:menuitem value="Add User" oncomplete="PF('addDialog').show()" title="View Add User" icon="ui-icon-plus ui-icon-person"/>
-	        <p:menuitem value="Update" actionListener="#" icon="ui-icon-newwin"/>
-	        <p:menuitem value="Delete" actionListener="#" ajax="false" icon="ui-icon-person"/>
-	        <p:separator />
-	        <p:menuitem value="Sign out" url="Login.xhtml" icon="ui-icon-extlink"/>
-	    </p:menuButton>
+
+		<p:menuButton value="Options">
+			<p:menuitem value="Add User" oncomplete="PF('addDialog').show()"
+				title="View Add User" icon="ui-icon-plus ui-icon-person" />
+			<p:separator />
+			<p:menuitem value="Sign out" url="Login.xhtml" icon="ui-icon-extlink" />
+		</p:menuButton>
 	</h:form>
 
-	<h:form>
-		<p:growl/>
-		
-		<p:dataTable id="tblUser" rendered="#{not empty userController.lstUser}"
+	<h:form id="form_tbl_user">
+		<p:dataTable id="tblUser"
+			rendered="#{not empty userController.lstUser}"
 			value="#{userController.lstUser}" var="user"
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} "
 			paginator="true" rows="5"
 			style="margin:auto; width: 70%; margin-top: 10%">
 
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="isEdit" />
-				</f:facet>
-				<h:outputText value="#{user.canEdit()}" />
+			<p:column style="display:none">
+				<p:growl showDetail="true" />
 			</p:column>
-			
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Id" />
 				</f:facet>
-				<h:outputText value="#{user.id}" />
+				<h:inputText value="#{user.id}" size="5" readonly="true"
+					title="Mã tài khoản không thể sửa" rendered="#{user.canEdit()}" />
+				<h:outputText value="#{user.id}" rendered="#{not user.canEdit()}" />
 			</p:column>
 
-			<p:column>
+			<p:column style="width: 200px">
 				<f:facet name="header">
 					<h:outputText value="Username" />
 				</f:facet>
-				<h:outputText value="#{user.username}" />
+				<h:inputText value="#{user.username}" rendered="#{user.canEdit()}" />
+				<h:outputText value="#{user.username}"
+					rendered="#{not user.canEdit()}" />
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Password" />
 				</f:facet>
-				<h:outputText value="#{user.password}" />
+				<h:inputText value="#{user.password}" rendered="#{user.canEdit()}" />
+				<h:outputText value="#{user.password}"
+					rendered="#{not user.canEdit()}" />
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Sex" />
 				</f:facet>
-				<h:outputText value="#{user.sex}" />
+				<h:inputText value="#{user.sex}" size="5"
+					rendered="#{user.canEdit()}" />
+				<h:outputText value="#{user.sex}" rendered="#{not user.canEdit()}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Address" />
+				</f:facet>
+				<h:inputText value="#{user.address.name}" size="5"
+					rendered="#{user.canEdit()}" />
+				<h:outputText value="#{user.address.name}"
+					rendered="#{not user.canEdit()}" />
 			</p:column>
 			<p:column style="padding: auto">
 				<f:facet name="header">
-					<h:outputText value="Delete" />
+					<h:outputText value="Status" />
 				</f:facet>
-				<p:commandButton  icon="ui-icon-trash" update="tblUser" title="Delete User" actionListener="#{userController.deleteUser(user)}" />
-				<p:commandButton  icon="ui-icon-pencil" update="tblUser" title="Update User" actionListener="#{userController.editUser(user)}" />
+				<p:commandButton icon="ui-icon-trash" update="tblUser"
+					title="Delete User"
+					actionListener="#{userController.deleteUser(user)}">
+					<p:confirm header="Are you sure you want to delete?"
+						message="#{userController.user.username} ?" icon="ui-icon-alert" />
+				</p:commandButton>
+				<p:commandButton icon="ui-icon-pencil" update="tblUser"
+					title="Update User"
+					actionListener="#{userController.editUser(user)}"
+					rendered="#{not user.canEdit()}" />
+				<p:commandButton icon="ui-icon-pencil" value="Update Info"
+					update="tblUser" title="Update User"
+					actionListener="#{userController.updateUser(user)}"
+					rendered="#{user.canEdit()}" />
+				<!-- <p:commandButton icon="ui-icon-person" title="Detail User"
+					action="#{userController.forward(user)}">
+				</p:commandButton> -->
 			</p:column>
 		</p:dataTable>
+	</h:form>
 
-		<p:commandLink update="addUser" oncomplete="PF('addDialog').show()"	title="View Add User">
+	<p:confirmDialog global="true" showEffect="explode" hideEffect="fold">
+		<p:commandButton value="Yes" type="button"
+			styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		<p:commandButton value="Cancel" type="button"
+			styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	</p:confirmDialog>
+
+	<h:form>
+		<p:commandLink update="addUser" oncomplete="PF('addDialog').show()"
+			title="View Add User">
 			<h:outputText styleClass="icon-search" style="margin:0 auto" />
 		</p:commandLink>
 
+		<!-- fade fold -->
 		<p:dialog header="Add User" widgetVar="addDialog" modal="true"
 			showEffect="fade" hideEffect="fade" resizable="false">
-			
+
 			<p:outputPanel id="addUser" style="text-align:center;">
 				<h:panelGrid styleClass="panel" columns="2" border="1"
 					cellpadding="10" cellspacing="1">
@@ -95,22 +133,34 @@
 
 					<h:outputLabel value="Username" />
 					<h:inputText value="#{userController.user.username}"
-						a:placeholder="Username" style="width:100%" required="true">
-						<f:validateLength minimum="5" />
+						a:placeholder="Username" style="width:100%" required="true"
+						label="Username">
+						<f:validateLength minimum="5" maximum="30" />
+						<f:validator validatorId="com.springdoan.EmailValidator" />
 					</h:inputText>
 					<h:outputLabel value="Password"></h:outputLabel>
 					<h:inputSecret a:placeholder="Password" style="width:100%"
-						value="#{userController.user.password}" />
-					<h:outputLabel value="Sex?" />
-					<h:selectOneRadio value="#{userController.user.sex}">
+						value="#{userController.user.password}" required="true"
+						label="Password ">
+						<f:validateLength minimum="5" maximum="30" />
+					</h:inputSecret>
+					<h:outputLabel value="Sex" />
+					<h:selectOneRadio value="#{userController.user.sex}"
+						required="true" label="Sex">
 						<f:selectItem itemValue="Male" itemLabel="Male" />
 						<f:selectItem itemValue="Female" itemLabel="Female" />
 					</h:selectOneRadio>
 
+					<h:outputLabel value="Address" />
+					<h:inputText a:placeholder="Address" style="width:100%"
+						value="#{userController.user.address.name}" />
+
 					<f:facet name="footer">
 						<h:panelGroup style="display:block; text-align:center">
-							<h:commandButton value="add" action="#{userController.addUser()}">
-							</h:commandButton>
+							<p:commandButton icon="ui-icon-person" value="Add User"
+								update=":form_tbl_user:tblUser addUser" title="Add User"
+								actionListener="#{userController.addUser()}"
+								oncomplete="PF('addDialog').hide()" />
 						</h:panelGroup>
 					</f:facet>
 				</h:panelGrid>

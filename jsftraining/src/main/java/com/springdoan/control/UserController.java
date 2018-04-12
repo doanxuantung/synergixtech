@@ -1,14 +1,18 @@
 package com.springdoan.control;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.springdoan.jpa.DAO.UserJPADAOImpl;
+import com.springdoan.jpa.DAO.UserJPADAO;
+import com.springdoan.model.Address;
+import com.springdoan.model.Product_buy;
 import com.springdoan.model.User;
 
 @Named
@@ -20,7 +24,9 @@ public class UserController implements Serializable {
 	private List<User> lstUser;
 	private User user = new User();
 
-	private UserJPADAOImpl userJPADAOImpl = new UserJPADAOImpl();
+	@Inject
+	private UserJPADAO userJPADAO;
+
 	private String kq = "";
 
 	public UserController() {
@@ -34,34 +40,53 @@ public class UserController implements Serializable {
 		this.kq = kq;
 	}
 
-
 	public void addUser() {
 		User usertemp = new User(user.getUsername(), user.getPassword(), user.getSex());
+		Address address = new Address(user.getAddress().getName());
+		usertemp.setAddress(address);
 		usertemp.setId(0);
-		userJPADAOImpl.save(usertemp);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Thông báo : Thêm thành công"));
+		userJPADAO.save(usertemp);
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Notification Insert", "Success!"));
 	}
 
 	public void deleteUser(User userRecieve) {
-		userJPADAOImpl.remove(userRecieve);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Thông báo : Xóa thành công"));
+		userJPADAO.remove(userRecieve);
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Notification Delete", "Success!"));
 	}
 
 	public void editUser(User userRecieve) {
-		System.out.println("OK" + userRecieve.canEdit());
 		userRecieve.setEdit(true);
-		System.out.println(userRecieve.canEdit());
+	}
+
+	public void updateUser(User userRecieve) {
+		userJPADAO.update(userRecieve);
+		userRecieve.setEdit(false);
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Notification Update", "Success!"));
+	}
+
+	public List<Product_buy> getAllProBuy(int id) {
+		List<Product_buy> list = new ArrayList<>();
+		list = userJPADAO.getListProduct(id);
+		return list;
+	}
+
+	public String forward(User userRecieve) {
+		return "DetailProductBuy?faces-redirect=true";
 	}
 
 	public String login() {
 		String username = user.getUsername();
 		String pass = user.getPassword();
-		User user = userJPADAOImpl.checkUser(username, pass);
+		User user = userJPADAO.checkUser(username, pass);
 		if (user != null) {
 			return "DemoDataTable?faces-redirect=true";
 		}
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage("Login : Bạn đã nhập sai tên tài khoản hoặc mật khẩu"));
+		// RequestContext.getCurrentInstance().update("username");
+		 FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_WARN, "Notification Login", "Username or password invalid!"));
 		return "";
 	}
 
@@ -82,7 +107,7 @@ public class UserController implements Serializable {
 	}
 
 	public void listUsers() {
-		this.lstUser = userJPADAOImpl.getListUser();
+		this.lstUser = userJPADAO.getListUser();
 	}
 
 	public String demoAjax() {

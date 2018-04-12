@@ -1,7 +1,9 @@
 package com.springdoan.jpa.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -10,10 +12,12 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import com.springdoan.model.Product_buy;
 import com.springdoan.model.User;
 
 @Transactional(rollbackOn = Exception.class)
-public class UserJPADAOImpl implements UserJPADAO {
+@ApplicationScoped
+class UserJPADAOImpl implements UserJPADAO {
 
 	private EntityManagerFactory emf;
 	private EntityManager em;
@@ -28,16 +32,12 @@ public class UserJPADAOImpl implements UserJPADAO {
 
 	@Override
 	public void save(User user) {
-		if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
 		em.persist(user);
 		et.commit();
 	}
 
 	@Override
 	public void remove(User user) {
-		if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
 		em.remove(user);
 		et.commit();
 	}
@@ -52,16 +52,29 @@ public class UserJPADAOImpl implements UserJPADAO {
 
 	@Override
 	public User checkUser(String username, String pass) {
-		Query query = em.createQuery("Select u from User u WHERE username = :user AND password = :pass");
-		query.setParameter("user", username);
-		query.setParameter("pass", pass);
 		User user = null;
 		try {
-			user = (User) query.getSingleResult();
+			user = em.createNamedQuery("user.checklogin", User.class).setParameter("user", username)
+					.setParameter("pass", pass).getSingleResult();
 		} catch (NoResultException nre) {
 			return null;
 		}
 		return user;
+	}
+
+	@Override
+	public void update(User user) {
+		em.merge(user);
+		et.commit();
+	}
+
+	@Override
+	public List<Product_buy> getListProduct(int idUser) {
+		// TODO Auto-generated method stub
+		List<Product_buy> lstProBuy = new ArrayList<>();
+		lstProBuy = em.createNamedQuery("product_buy.findAllProBuy", Product_buy.class).setParameter("id_user", idUser)
+				.getResultList();
+		return lstProBuy;
 	}
 
 }

@@ -13,7 +13,7 @@
 
 <h:body>
 	<h:form>
-		<p:growl />
+		<p:growl id="grInfo" life="6000" showDetail="true"/>
 		<p:panel header="Login" style="margin-bottom:10px;margin-left: 38%;	margin-top: 5%;	width:26%;height: 30%">
 			<h:panelGrid styleClass="panel" columns="3" cellpadding="10"
 				cellspacing="1">
@@ -37,11 +37,10 @@
 					a:placeholder="Passwork" size="30" required="true" label="Password ">
 					<f:validateLength minimum="5" maximum="30" />
 				</p:password>
-				<!-- <p:message for="password" /> -->
 
 				<f:facet name="footer">
 					<h:panelGroup style="display:block; text-align:center">
-						<h:commandButton value="Sign In" icon="ui-icon-check"
+						<h:commandButton styleClass="btn" value="Login"
 							action="#{userController.login()}">
 						</h:commandButton>
 					</h:panelGroup>

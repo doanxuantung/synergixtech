@@ -2,16 +2,22 @@ package com.springdoan.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
 @Table(name = "user")
+@NamedQueries({
+		@NamedQuery(name = "user.checklogin", query = "Select u from User u WHERE username = :user AND password = :pass") })
 public class User implements Serializable {
 
 	/**
@@ -33,6 +39,9 @@ public class User implements Serializable {
 
 	@Transient
 	private boolean canEdit = false;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private Address address = new Address();
 
 	public User() {
 	}
@@ -89,6 +98,14 @@ public class User implements Serializable {
 
 	public void setEdit(boolean canEdit) {
 		this.canEdit = canEdit;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 }

@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<h:outputStylesheet library="css" name="style.css" />
+	<!-- <f:event listener="#{userController.listUsers()}" type="preRenderView"></f:event> -->
+</h:head>
+
+<h:body>
+	<h:form>
+		<h3 style="margin-top: 0">List Product Buy</h3>
+		<p:accordionPanel
+			style="margin-left: 30%;
+								width: 700px;
+								height: 500px;">
+			<p:tab title="Detail Product Buy">
+				<p:dataScroller value="#{userController.getAllProBuy(101)}"
+					var="probuy" chunkSize="10">
+
+					<h:panelGrid columns="2" style="width:100%"
+						columnClasses="logo,detail">
+						<p:graphicImage name="resources/images/icon_synergixtech.jpg" />
+
+						<p:outputPanel>
+							<h:panelGrid columns="2" cellpadding="5">
+								<h:outputText value="Id:" />
+								<h:outputText value="#{probuy.product.name}"
+									style="font-weight: bold" />
+
+								<h:outputText value="Price:" />
+								<h:outputText value="#{probuy.product.price}"
+									style="font-weight: bold" />
+
+								<h:outputText value="Amount:" />
+								<h:outputText value="#{probuy.amount}" style="font-weight: bold" />
+							</h:panelGrid>
+						</p:outputPanel>
+					</h:panelGrid>
+				</p:dataScroller>
+			</p:tab>
+		</p:accordionPanel>
+	</h:form>
+</h:body>
+</html>

@@ -1,33 +1,48 @@
-	.panel {
-		background: url("images/Image2.jpg") 0px 80px no-repeat;
-	}
-	
-	.userTable {
-		border-collapse: collapse;
-		border: 1px solid #000000;
-		margin-left: 40%;
-		width: 300px;
-		height: 500px;
-	}
-	
-	.userTableHeader {
-		text-align: center;
-		color: blue;
-		background: none repeat scroll 0 0 #B5B5B5;
-		border-bottom: 1px solid #000000;
-		padding: 5px;
-	}
+.panel {
+	background: url("images/Image2.jpg") 0px 80px no-repeat;
+}
 
-	.userTableOddRow {
-		text-align: center;
-		background: none repeat scroll 0 0 #FFFFFFF;
-		padding: 10px;
-	}
+.userTable {
+	border-collapse: collapse;
+	border: 1px solid #000000;
+	margin-left: 40%;
+	width: 300px;
+	height: 500px;
+}
 
-	.userTableEvenRow {
-		text-align: center;
-		background: none repeat scroll 0 0 #D3D3D3;
-		padding-left: 10px;
-	}
+.userTableHeader {
+	text-align: center;
+	color: blue;
+	background: none repeat scroll 0 0 #B5B5B5;
+	border-bottom: 1px solid #000000;
+	padding: 5px;
+}
 
-	
+.userTableOddRow {
+	text-align: center;
+	background: none repeat scroll 0 0 #FFFFFFF;
+	padding: 10px;
+}
+
+.userTableEvenRow {
+	text-align: center;
+	background: none repeat scroll 0 0 #D3D3D3;
+	padding-left: 10px;
+}
+
+.btn {
+	background-color: #4CAF50; /* Green */
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	font-family: time new roman;
+}
+
+.btn:hover {
+	cursor: pointer;
+	background-color: #008CBA;
+}
