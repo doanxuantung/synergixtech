@@ -5,19 +5,24 @@
 	<persistence-unit name="jsftraining">
 	</persistence-unit>
 
-	<persistence-unit name="mypersistence" transaction-type="RESOURCE_LOCAL">
-		<description>My Persistence Unit</description>
+	<persistence-unit name="mypersistence"	transaction-type="JTA">
+	
+		<jta-data-source>java:/jdbc/MySqlDS</jta-data-source>
 		<mapping-file>META-INF/persistence.xml</mapping-file>
-		<class>com.springdoan.model.User</class>
 		<class>com.springdoan.model.Address</class>
-		<class>com.springdoan.model.Product</class>
 		<class>com.springdoan.model.Product_buy</class>
-		<properties>
+		<class>com.springdoan.model.Product</class>
+		<class>com.springdoan.model.User</class>
+		<!-- <properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/synergixtech" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="tungptit" />
-		</properties>
+
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.connection.autocommit" value="false" />
+		</properties> -->
 	</persistence-unit>
 
 </persistence>

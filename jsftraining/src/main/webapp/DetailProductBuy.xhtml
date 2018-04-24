@@ -11,6 +11,9 @@
 	<h:outputStylesheet library="css" name="style.css" />
 	<!-- <f:event listener="#{userController.listUsers()}" type="preRenderView"></f:event> -->
 </h:head>
+<f:metadata>
+	<f:viewParam name="idUser" value="#{userController.user.id}" ></f:viewParam>
+</f:metadata>
 
 <h:body>
 	<h:form>
@@ -19,8 +22,8 @@
 			style="margin-left: 30%;
 								width: 700px;
 								height: 500px;">
-			<p:tab title="Detail Product Buy">
-				<p:dataScroller value="#{userController.getAllProBuy(101)}"
+			<p:tab title="Detail Product Buy + ">
+				<p:dataScroller value="#{userController.getAllProBuy()}"
 					var="probuy" chunkSize="10">
 
 					<h:panelGrid columns="2" style="width:100%"
@@ -29,6 +32,10 @@
 
 						<p:outputPanel>
 							<h:panelGrid columns="2" cellpadding="5">
+								<h:outputText value="Name:" />
+								<h:outputText value="#{probuy.user.username}"
+									style="font-weight: bold" />
+									
 								<h:outputText value="Id:" />
 								<h:outputText value="#{probuy.product.name}"
 									style="font-weight: bold" />

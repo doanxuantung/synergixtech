@@ -5,41 +5,39 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import com.springdoan.model.Product;
 import com.springdoan.model.Product_buy;
 import com.springdoan.model.User;
 
-@Transactional(rollbackOn = Exception.class)
+@Transactional
 @ApplicationScoped
-class UserJPADAOImpl implements UserJPADAO {
+public class UserJPADAOImpl implements UserJPADAO {
 
-	private EntityManagerFactory emf;
+	@PersistenceContext(unitName = "mypersistence")
 	private EntityManager em;
-	private EntityTransaction et;
 
 	public UserJPADAOImpl() {
-		emf = Persistence.createEntityManagerFactory("mypersistence");
-		em = emf.createEntityManager();
-		et = em.getTransaction();
-		et.begin();
+
 	}
 
 	@Override
 	public void save(User user) {
 		em.persist(user);
-		et.commit();
 	}
 
 	@Override
-	public void remove(User user) {
-		em.remove(user);
-		et.commit();
+	public void del(User user) {
+		em.remove(em.merge(user));
+	}
+
+	@Override
+	public void update(User user) {
+		em.merge(user);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -63,18 +61,22 @@ class UserJPADAOImpl implements UserJPADAO {
 	}
 
 	@Override
-	public void update(User user) {
-		em.merge(user);
-		et.commit();
-	}
-
-	@Override
 	public List<Product_buy> getListProduct(int idUser) {
 		// TODO Auto-generated method stub
 		List<Product_buy> lstProBuy = new ArrayList<>();
 		lstProBuy = em.createNamedQuery("product_buy.findAllProBuy", Product_buy.class).setParameter("id_user", idUser)
 				.getResultList();
 		return lstProBuy;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> getListProduct() {
+		// TODO Auto-generated method stub
+		Query query = em.createQuery("Select u from Product u");
+		List<Product> list = query.getResultList();
+		System.out.println("sdfsfdsfs" + list.size());
+		return list;
 	}
 
 }

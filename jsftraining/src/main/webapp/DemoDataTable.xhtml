@@ -10,17 +10,20 @@
 <h:head>
 	<h:outputStylesheet library="css" name="style.css" />
 	<f:event listener="#{userController.listUsers()}" type="preRenderView"></f:event>
+	<f:event listener="#{userController.getUserSession()}" type="preRenderView"></f:event>
 </h:head>
 
 <h:body>
-
+	
 	<h:form>
 
-		<p:menuButton value="Options">
-			<p:menuitem value="Add User" oncomplete="PF('addDialog').show()"
+		<p:menuButton value="#{userController.user.username.subSequence(0,userController.user.username.indexOf('@'))}" >
+			<p:menuitem value="Add User" oncomplete="PF('addDialog').show()" rendered="#{userController.checkUserSession()}"
 				title="View Add User" icon="ui-icon-plus ui-icon-person" />
+			<p:menuitem value="Product Buy" action="#{userController.forwardToList()}" icon="ui-icon-extlink" rendered="#{userController.checkUserSession()}" />
 			<p:separator />
-			<p:menuitem value="Sign out" url="Login.xhtml" icon="ui-icon-extlink" />
+			<p:menuitem value="Sign out" action="#{userController.logout()}" icon="ui-icon-extlink" rendered="#{userController.checkUserSession()}" />
+			<p:menuitem value="Login" action="Login.xhtml?faces-redirect=true" icon="ui-icon-extlink" rendered="#{not userController.checkUserSession()}" />
 		</p:menuButton>
 	</h:form>
 
@@ -32,12 +35,20 @@
 			paginator="true" rows="5"
 			style="margin:auto; width: 70%; margin-top: 10%">
 
+	
 			<p:column style="display:none">
 				<p:growl showDetail="true" />
 			</p:column>
+			
+			<!-- <p:column id="ok">
+				<f:facet name="header">
+					<h:outputText value="status" />
+				</f:facet>
+				<h:inputText value="#{user.canEdit()}" />
+			</p:column> -->
 			<p:column>
 				<f:facet name="header">
-					<h:outputText value="Id" />
+					<h:outputLabel value="ID(Check: #{userController.count} )"></h:outputLabel>
 				</f:facet>
 				<h:inputText value="#{user.id}" size="5" readonly="true"
 					title="Mã tài khoản không thể sửa" rendered="#{user.canEdit()}" />
@@ -48,18 +59,18 @@
 				<f:facet name="header">
 					<h:outputText value="Username" />
 				</f:facet>
-				<h:inputText value="#{user.username}" rendered="#{user.canEdit()}" />
-				<h:outputText value="#{user.username}"
-					rendered="#{not user.canEdit()}" />
+				<h:inputText value="#{user.username}" rendered="#{not user.canEdit()}" />
+				<h:outputText value="#{user.username} "
+					rendered="#{user.canEdit()}" />
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Password" />
 				</f:facet>
-				<h:inputText value="#{user.password}" rendered="#{user.canEdit()}" />
+				<h:inputText value="#{user.password}" rendered="#{not user.canEdit()}" />
 				<h:outputText value="#{user.password}"
-					rendered="#{not user.canEdit()}" />
+					rendered="#{user.canEdit()}" />
 			</p:column>
 
 			<p:column>
@@ -67,8 +78,26 @@
 					<h:outputText value="Sex" />
 				</f:facet>
 				<h:inputText value="#{user.sex}" size="5"
-					rendered="#{user.canEdit()}" />
-				<h:outputText value="#{user.sex}" rendered="#{not user.canEdit()}" />
+					rendered="#{not user.canEdit()}" />
+				<h:outputText value="#{user.sex}" rendered="#{user.canEdit()}" />
+			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Birth" />
+				</f:facet>
+				<h:inputText value="#{user.birth}" size="5" >
+				<f:convertDateTime type="date" pattern="dd/MM/yyyy" dateStyle="full" />
+				</h:inputText>
+			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Number" />
+				</f:facet>
+				<h:inputText value="#{user.numProfile}" size="5" >
+				<f:convertNumber type="number" />
+				</h:inputText>
 			</p:column>
 
 			<p:column>
@@ -76,31 +105,28 @@
 					<h:outputText value="Address" />
 				</f:facet>
 				<h:inputText value="#{user.address.name}" size="5"
-					rendered="#{user.canEdit()}" />
-				<h:outputText value="#{user.address.name}"
 					rendered="#{not user.canEdit()}" />
+				<h:outputText value="#{user.address.name}"
+					rendered="#{user.canEdit()}" />
 			</p:column>
 			<p:column style="padding: auto">
 				<f:facet name="header">
 					<h:outputText value="Status" />
 				</f:facet>
-				<p:commandButton icon="ui-icon-trash" update="tblUser"
+				<p:commandButton icon="ui-icon-trash" update="tblUser" rendered="#{userController.checkUserSession()}"
 					title="Delete User"
 					actionListener="#{userController.deleteUser(user)}">
-					<p:confirm header="Are you sure you want to delete?"
-						message="#{userController.user.username} ?" icon="ui-icon-alert" />
+					 <p:confirm header="Are you sure you want to delete?"
+						message="#{user.username} ?" icon="ui-icon-alert" /> 
 				</p:commandButton>
-				<p:commandButton icon="ui-icon-pencil" update="tblUser"
-					title="Update User"
-					actionListener="#{userController.editUser(user)}"
-					rendered="#{not user.canEdit()}" />
-				<p:commandButton icon="ui-icon-pencil" value="Update Info"
+				
+				<p:commandButton icon="ui-icon-pencil" rendered="#{userController.checkUserSession()}" 
 					update="tblUser" title="Update User"
-					actionListener="#{userController.updateUser(user)}"
-					rendered="#{user.canEdit()}" />
-				<!-- <p:commandButton icon="ui-icon-person" title="Detail User"
+					actionListener="#{userController.updateUser(user)}" />
+				<p:commandButton icon="ui-icon-person" title="Detail User"
 					action="#{userController.forward(user)}">
-				</p:commandButton> -->
+					<f:param  name="idUser" value="#{user.id}" />
+				</p:commandButton> 
 			</p:column>
 		</p:dataTable>
 	</h:form>
@@ -137,12 +163,14 @@
 						label="Username">
 						<f:validateLength minimum="5" maximum="30" />
 						<f:validator validatorId="com.springdoan.EmailValidator" />
+						<p:clientValidator />
 					</h:inputText>
 					<h:outputLabel value="Password"></h:outputLabel>
 					<h:inputSecret a:placeholder="Password" style="width:100%"
 						value="#{userController.user.password}" required="true"
 						label="Password ">
 						<f:validateLength minimum="5" maximum="30" />
+						<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,10})" /> 
 					</h:inputSecret>
 					<h:outputLabel value="Sex" />
 					<h:selectOneRadio value="#{userController.user.sex}"
@@ -150,7 +178,20 @@
 						<f:selectItem itemValue="Male" itemLabel="Male" />
 						<f:selectItem itemValue="Female" itemLabel="Female" />
 					</h:selectOneRadio>
-
+					
+					<p:outputLabel for="effect" value="Birth" />
+       				<p:calendar id="effect" value="#{userController.user.birth}" required="true" style="width:100%" effect="fold" >
+       					<f:convertDateTime type="date" pattern="MM/dd/yy" dateStyle="full" />
+       					
+						<p:clientValidator />
+       				</p:calendar>
+       				
+       				<h:outputLabel value="Number Profile" />
+					<p:inputNumber value="#{userController.user.numProfile}"
+						required="true" label="Number Profile">
+						<p:clientValidator event="keyup"/>
+					</p:inputNumber>
+					
 					<h:outputLabel value="Address" />
 					<h:inputText a:placeholder="Address" style="width:100%"
 						value="#{userController.user.address.name}" />
@@ -159,8 +200,8 @@
 						<h:panelGroup style="display:block; text-align:center">
 							<p:commandButton icon="ui-icon-person" value="Add User"
 								update=":form_tbl_user:tblUser addUser" title="Add User"
-								actionListener="#{userController.addUser()}"
-								oncomplete="PF('addDialog').hide()" />
+								actionListener="#{userController.addUser()}"/>
+								<!-- oncomplete="PF('addDialog').hide()" /> -->
 						</h:panelGroup>
 					</f:facet>
 				</h:panelGrid>

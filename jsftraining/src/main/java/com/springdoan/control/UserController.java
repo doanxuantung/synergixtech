@@ -4,19 +4,22 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import com.springdoan.jpa.DAO.UserJPADAO;
 import com.springdoan.model.Address;
+import com.springdoan.model.Product;
 import com.springdoan.model.Product_buy;
 import com.springdoan.model.User;
 
 @Named
-@SessionScoped
+@ConversationScoped
 public class UserController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -27,21 +30,55 @@ public class UserController implements Serializable {
 	@Inject
 	private UserJPADAO userJPADAO;
 
-	private String kq = "";
+	@Inject
+	private Conversation conversation;
+
+	private int count = 0;
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
 
 	public UserController() {
 	}
 
-	public String getKq() {
-		return kq;
+	public User getUserSession() {
+		if (!conversation.isTransient()) {
+			conversation.end();
+			System.out.println("End------------------------------------Start");
+		}
+		System.out.println("-------------------------------------Start");
+		conversation.begin();
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		user = (User) session.getAttribute("user");
+		return user;
 	}
 
-	public void setKq(String kq) {
-		this.kq = kq;
+	public String forwardProduct() {
+		if (!conversation.isTransient()) {
+			System.out.println("-------------------------------------End");
+			conversation.end();
+		}
+		return "ListProductBuy.xhtml?faces-redirect=true";
+	}
+
+	public String logout() {
+		if (!conversation.isTransient()) {
+			System.out.println("-------------------------------------End");
+			conversation.end();
+		}
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "Login.xhtml?faces-redirect=true";
 	}
 
 	public void addUser() {
-		User usertemp = new User(user.getUsername(), user.getPassword(), user.getSex());
+		count++;
+		User usertemp = new User(user.getUsername(), user.getPassword(), user.getSex(), user.getNumProfile(),
+				user.getBirth());
 		Address address = new Address(user.getAddress().getName());
 		usertemp.setAddress(address);
 		usertemp.setId(0);
@@ -50,14 +87,29 @@ public class UserController implements Serializable {
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Notification Insert", "Success!"));
 	}
 
+	public boolean checkUserSession() {
+		try {
+			if (user.getUsername().equals("")) {
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+		return true;
+	}
+
 	public void deleteUser(User userRecieve) {
-		userJPADAO.remove(userRecieve);
+		count++;
+		userJPADAO.del(userRecieve);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Notification Delete", "Success!"));
 	}
 
 	public void editUser(User userRecieve) {
+		count++;
 		userRecieve.setEdit(true);
+		System.out.println(userRecieve.canEdit());
 	}
 
 	public void updateUser(User userRecieve) {
@@ -67,27 +119,34 @@ public class UserController implements Serializable {
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Notification Update", "Success!"));
 	}
 
-	public List<Product_buy> getAllProBuy(int id) {
+	private int id_user;
+
+	public int getId_user() {
+		return id_user;
+	}
+
+	public void setId_user(int id_user) {
+		this.id_user = id_user;
+	}
+
+	public String forwardToList() {
+		return "ListProductBuy.xhtml?faces-redirect=true";
+	}
+
+	public List<Product> all_ProductBuy() {
+		List<Product> list = userJPADAO.getListProduct();
+		return list;
+	}
+
+	public List<Product_buy> getAllProBuy() {
 		List<Product_buy> list = new ArrayList<>();
-		list = userJPADAO.getListProduct(id);
+		list = userJPADAO.getListProduct(id_user);
 		return list;
 	}
 
 	public String forward(User userRecieve) {
-		return "DetailProductBuy?faces-redirect=true";
-	}
-
-	public String login() {
-		String username = user.getUsername();
-		String pass = user.getPassword();
-		User user = userJPADAO.checkUser(username, pass);
-		if (user != null) {
-			return "DemoDataTable?faces-redirect=true";
-		}
-		// RequestContext.getCurrentInstance().update("username");
-		 FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_WARN, "Notification Login", "Username or password invalid!"));
-		return "";
+		id_user = userRecieve.getId();
+		return "DetailProductBuy.xhtml?faces-redirect=true";
 	}
 
 	public User getUser() {
@@ -99,6 +158,7 @@ public class UserController implements Serializable {
 	}
 
 	public List<User> getLstUser() {
+		count++;
 		return lstUser;
 	}
 
@@ -109,20 +169,4 @@ public class UserController implements Serializable {
 	public void listUsers() {
 		this.lstUser = userJPADAO.getListUser();
 	}
-
-	public String demoAjax() {
-		kq = "ketqua: " + user.getUsername();
-		return kq;
-	}
-
-	// public void displayLocation() {
-	// FacesMessage msg;
-	// msg = new FacesMessage("Selected", " of ");
-	// // msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid", "City is
-	// not
-	// // selected.");
-	//
-	// FacesContext.getCurrentInstance().addMessage(null, msg);
-	// }
-
 }

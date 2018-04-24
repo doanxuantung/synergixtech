@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+
+<h:body>
+	<h3 style="margin-top: 0">List Product Buy</h3>
+	<h:form>
+		<b:dataTable value="#{userController.all_ProductBuy()}" var="pro">
+			<b:dataTableColumn value="#{pro.name}" />
+			<b:dataTableColumn value="#{pro.price}" order="asc" />
+			<b:dataTableColumn value="#{pro.des}"
+				label="Engine Power (hp)" />
+		</b:dataTable>
+	</h:form>
+	<!-- <h:form id="form_tbl_user">
+		<p:dataTable id="tblUser"
+			value="#{userController.all_ProductBuy()}" var="product"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} "
+			paginator="true" rows="5"
+			style="margin:auto; width: 70%; margin-top: 10%">
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Id" />
+				</f:facet>
+				<h:outputText value="#{product.id}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Name" />
+				</f:facet>
+				<h:outputText value="#{product.name} " />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Price" />
+				</f:facet>
+				<h:outputText value="#{product.price}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Des" />
+				</f:facet>
+				<h:outputText value="#{product.des}" />
+			</p:column>
+			<p:column style="padding: auto">
+				<f:facet name="header">
+					<h:outputText value="Status" />
+				</f:facet>
+				<p:selectBooleanCheckbox value="#{selectBooleanView.value1}" />
+			</p:column>
+		</p:dataTable>
+	</h:form> -->
+</h:body>
+</html>

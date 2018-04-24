@@ -28,8 +28,7 @@ public class EmailValidator implements Validator {
 		matcher = pattern.matcher(value.toString());
 		if (!matcher.matches()) {
 
-
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+			FacesContext.getCurrentInstance().addMessage("ok", new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Notification Username: ", "Invalid E-mail acepted only @gmail.com or @yahoo.com!"));
 
 		}

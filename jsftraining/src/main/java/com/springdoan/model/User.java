@@ -1,6 +1,7 @@
 package com.springdoan.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "user")
@@ -37,6 +40,14 @@ public class User implements Serializable {
 	@Column(name = "sex")
 	private String sex;
 
+	@Column(name = "num_profile")
+	@Min(0)
+	@Max(100)
+	private Integer numProfile;
+
+	@Column(name = "birth")
+	private Date birth;
+
 	@Transient
 	private boolean canEdit = false;
 
@@ -45,6 +56,7 @@ public class User implements Serializable {
 
 	public User() {
 	}
+
 
 	public User(int id, String username, String password, String sex) {
 		this.id = id;
@@ -58,6 +70,32 @@ public class User implements Serializable {
 		this.username = username;
 		this.password = password;
 		this.sex = sex;
+	}
+
+	public Integer getNumProfile() {
+		return numProfile;
+	}
+
+	public void setNumProfile(Integer numProfile) {
+		this.numProfile = numProfile;
+	}
+
+
+	public Date getBirth() {
+		return birth;
+	}
+
+	public void setBirth(Date birth) {
+		this.birth = birth;
+	}
+
+	public User(String username, String password, String sex, Integer numProfile, Date birth) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.sex = sex;
+		this.numProfile = numProfile;
+		this.birth = birth;
 	}
 
 	public int getId() {

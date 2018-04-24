@@ -2,13 +2,14 @@ package com.springdoan.jpa.DAO;
 
 import java.util.List;
 
+import com.springdoan.model.Product;
 import com.springdoan.model.Product_buy;
 import com.springdoan.model.User;
 
 public interface UserJPADAO {
 	public void save(User user);
 
-	public void remove(User user);
+	public void del(User user);
 
 	public void update(User user);
 
@@ -17,4 +18,6 @@ public interface UserJPADAO {
 	public User checkUser(String username, String pass);
 
 	public List<Product_buy> getListProduct(int idUser);
+
+	public List<Product> getListProduct();
 }
