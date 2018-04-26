@@ -75,8 +75,14 @@ public class UserJPADAOImpl implements UserJPADAO {
 		// TODO Auto-generated method stub
 		Query query = em.createQuery("Select u from Product u");
 		List<Product> list = query.getResultList();
-		System.out.println("sdfsfdsfs" + list.size());
 		return list;
+	}
+
+	@Override
+	public void save(Product_buy product_buy) {
+		// TODO Auto-generated method stub
+
+		em.persist(em.merge(product_buy));
 	}
 
 }

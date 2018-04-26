@@ -20,4 +20,6 @@ public interface UserJPADAO {
 	public List<Product_buy> getListProduct(int idUser);
 
 	public List<Product> getListProduct();
+
+	public void save(Product_buy product_buy);
 }

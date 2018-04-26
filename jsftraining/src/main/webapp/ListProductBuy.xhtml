@@ -13,56 +13,29 @@
 </h:head>
 
 <h:body>
+	 <p:growl id="msg" />
 	<h3 style="margin-top: 0">List Product Buy</h3>
-	<h:form>
-		<b:dataTable value="#{userController.all_ProductBuy()}" var="pro">
+	<h:form style="margin:auto; width: 70%; margin-top: 10%">
+		<b:dataTable value="#{}" 
+			var="pro" 
+			page-length="5"
+               page-length-menu="5,10,15">
 			<b:dataTableColumn value="#{pro.name}" />
 			<b:dataTableColumn value="#{pro.price}" order="asc" />
 			<b:dataTableColumn value="#{pro.des}"
 				label="Engine Power (hp)" />
+			<b:dataTableColumn label="Status" >
+				<h:inputText value="#{userController.amount}"
+					a:placeholder="Username" style="width:100%" required="true">
+					
+				</h:inputText>
+				<p:selectBooleanCheckbox value="#{userController.checkPro}"  >
+					<p:ajax  listener="#{userController.check(pro)}" />
+				</p:selectBooleanCheckbox>
+			</b:dataTableColumn>
 		</b:dataTable>
+			 <h:commandButton value="Insert Product" action="#{userController.addBuy()}" style="width:100px"/>
 	</h:form>
-	<h:form id="form_tbl_user">
-		<p:dataTable id="tblUser"
-			value="#{userController.all_ProductBuy()}" var="product"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} "
-			paginator="true" rows="5"
-			style="margin:auto; width: 70%; margin-top: 10%">
-			
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Id" />
-				</f:facet>
-				<h:outputText value="#{product.id}" />
-			</p:column>
-
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Name" />
-				</f:facet>
-				<h:outputText value="#{product.name} " />
-			</p:column>
-
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Price" />
-				</f:facet>
-				<h:outputText value="#{product.price}" />
-			</p:column>
-
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Des" />
-				</f:facet>
-				<h:outputText value="#{product.des}" />
-			</p:column>
-			<p:column style="padding: auto">
-				<f:facet name="header">
-					<h:outputText value="Status" />
-				</f:facet>
-				<p:selectBooleanCheckbox value="#{selectBooleanView.value1}" />
-			</p:column>
-		</p:dataTable>
-	</h:form> 
+	
 </h:body>
 </html>
